@@ -24,11 +24,18 @@ class App extends React.Component {
     }
   }
 
-  updateListItems(id, task, complete){
-    const listItem = {id, task, complete}
+  componentDidMount() {
+    const listContents = localStorage.getItem("list");
+    this.setState(
+      { listItems: JSON.parse(listContents) || [] }
+    )
+  }
+
+  updateListItems(id, task, complete) {
+    const listItem = { id, task, complete }
     this.setState((state) => ({
       listItems: state.listItems.concat(listItem)
-    }))
+    }), () => localStorage.setItem("list", JSON.stringify(this.state.listItems)))
   }
 
   render() {

@@ -1,6 +1,9 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css'
+
 
 class Add extends React.Component {
   constructor(props){
@@ -10,7 +13,25 @@ class Add extends React.Component {
       description: "",
       completed: false
     }
-  }
+    toastr.options = {
+        closeButton: true,
+        debug: false,
+        extendedTimeOut: "1000",
+        hideDuration: "1000",
+        hideEasing: "linear",
+        hideMethod: "fadeOut",
+        newestOnTop: false,
+        onclick: null,
+        positionClass: "toast-top-full-width",
+        preventDuplicates: true,
+        progressBar: true,
+        showDuration: "300",
+        showEasing: "swing",
+        showMethod: "fadeIn",
+        timeOut: "5000",
+      };
+      toastr.clear();
+    }
 
   handleChange(event) {
     const newState = {};
@@ -25,6 +46,7 @@ class Add extends React.Component {
   submitHandler(event) {
     event.preventDefault();
     this.props.onsubmit(this.state.id, this.state.description, this.state.completed);
+    toastr.success("Item added");
     this.setState({
       id: 0,
       description: "",
